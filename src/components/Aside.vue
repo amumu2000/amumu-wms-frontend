@@ -17,7 +17,7 @@ const routeList = [
         child: [
             {
                 routeIcon: "Aim",
-                routePath: "/manage/console/mv11",
+                routePath: "/manage/console/aim",
                 routeName: "观测枢"
             }, {
                 routeIcon: "User",
@@ -32,8 +32,8 @@ const routeList = [
         child: [
             {
                 routeIcon: "Filter",
-                routePath: "/manage/console/mv21",
-                routeName: "出入核验"
+                routePath: "/manage/console/worker",
+                routeName: "派遣核验"
             }
         ]
     }, {
@@ -43,8 +43,8 @@ const routeList = [
         child: [
             {
                 routeIcon: "Timer",
-                routePath: "/manage/console/mv31",
-                routeName: "任务管理"
+                routePath: "/manage/console/dispatch",
+                routeName: "派遣管理"
             }, {
                 routeIcon: "Goods",
                 routePath: "/manage/console/goods",
@@ -66,7 +66,7 @@ const routeList = [
                 routeName: "用户管理"
             }, {
                 routeIcon: "Open",
-                routePath: "/manage/console/mv42",
+                routePath: "/manage/console/logs",
                 routeName: "系统日志"
             },
         ]

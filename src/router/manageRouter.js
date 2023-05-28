@@ -32,9 +32,9 @@ export default {
             },
             children: [
                 {
-                    path: "mv11",
-                    name: 'mv11',
-                    component: () => import('../views/manage/MenuView1_1.vue'),
+                    path: "aim",
+                    name: 'aim',
+                    component: () => import('../views/manage/AimView.vue'),
                 },
                 {
                     path: "myself",
@@ -42,18 +42,13 @@ export default {
                     component: () => import('../views/manage/SelfView.vue'),
                 },
                 {
-                    path: "mv21",
-                    name: 'mv21',
-                    component: () => import('../views/manage/MenuView2_1.vue'),
-                },
-                {
-                    path: "mv22",
-                    name: 'mv22',
-                    component: () => import('../views/manage/MenuView2_2.vue'),
+                    path: "worker",
+                    name: 'worker',
+                    component: () => import('../views/manage/WorkerView.vue'),
                 }, {
-                    path: "mv31",
-                    name: 'mv31',
-                    component: () => import('../views/manage/MenuView3_1.vue'),
+                    path: "dispatch",
+                    name: 'dispatch',
+                    component: () => import('../views/manage/DispatchView.vue'),
                 }, {
                     path: "goods",
                     name: 'goods',
@@ -67,14 +62,10 @@ export default {
                     name: 'adminUsers',
                     component: () => import('../views/manage/AdminUsersView.vue'),
                 }, {
-                    path: "mv42",
-                    name: 'mv42',
-                    component: () => import('../views/manage/MenuView4_2.vue'),
-                }, {
-                    path: "mv43",
-                    name: 'mv43',
-                    component: () => import('../views/manage/AdminWarehouseView.vue'),
-                },
+                    path: "logs",
+                    name: 'logs',
+                    component: () => import('../views/manage/LogsView.vue'),
+                }
             ]
         },
     ]

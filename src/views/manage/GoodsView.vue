@@ -1,13 +1,13 @@
 <script setup>
 
 import {getGoodsList, addGoods, deleteGoods, editGoods} from "@/api";
-import {reactive, ref} from "vue";
+import {ref} from "vue";
 
 const allGoodsData = ref()
 const currentGoodsData = ref(null)
 const targetGoodsData = ref({})
-const newGoodsData = reactive({})
-const filterForm = reactive({})
+const newGoodsData = ref({})
+const filterForm = ref({})
 const multiSelectionID = ref([])
 
 
@@ -74,7 +74,8 @@ const editConfirm = () => {
 }
 
 const handleDelete = (index, row) => {
-    deleteGoods([row.id]).then(() => {
+    let IDs = [row.id]
+    deleteGoods(IDs).then(() => {
         initForm()
     })
 
@@ -93,7 +94,7 @@ const handleMultiDelete = () => {
 }
 const addGoodsConfirm = () => {
     dialogNewFormVisible.value = false
-    let form = {...newGoodsData}
+    let form = {...newGoodsData.value}
     form.price = parseInt(form.price) * 100
     addGoods(form).then(() => {
         initForm()
@@ -101,10 +102,15 @@ const addGoodsConfirm = () => {
 }
 
 const handleFilter = () => {
-    let form = {...filterForm}
-    form.goods_id = parseInt(form.goods_id)
+    let form = {...filterForm.value}
+    if (form.goods_id) {
+        form.goods_id = parseInt(form.goods_id)
+    }
+    form.price = Math.round(form.price * 100)
+    console.log(form)
     init(form)
     drawerVisible.value = false
+    filterForm.value = {}
 }
 
 initForm()
@@ -124,6 +130,7 @@ initForm()
                 <el-table-column prop="good_name" label="货物名"/>
                 <el-table-column prop="category" label="类别"/>
                 <el-table-column prop="price" label="价格"/>
+                <el-table-column prop="total_count" label="总库存"/>
                 <el-table-column label="操作" align="center">
                     <template #default="scope">
                         <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -236,8 +243,12 @@ initForm()
                 <el-form-item label="仓库名" :label-width="formLabelWidth">
                     <el-input v-model="filterForm.goods_name" autocomplete="off"/>
                 </el-form-item>
+
                 <el-form-item label="类别" :label-width="formLabelWidth">
                     <el-input v-model="filterForm.category" autocomplete="off"/>
+                </el-form-item>
+                <el-form-item label="价格(元)" :label-width="formLabelWidth">
+                    <el-input type="number" v-model="filterForm.price" autocomplete="off"/>
                 </el-form-item>
                 <div style="display: flex;justify-content: right">
                     <el-button type="primary" @click="handleFilter">筛选</el-button>

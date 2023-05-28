@@ -16,3 +16,12 @@ export {getGoodsList} from '@/api/goods/getGoodsList'
 export {editGoods} from '@/api/goods/editGoods'
 export {addGoods} from '@/api/goods/addGoods'
 export {deleteGoods} from '@/api/goods/deleteGoods'
+
+
+export {getDispatchList} from "@/api/dispatch/getDispatchList"
+export {addDispatch} from "@/api/dispatch/addDispatch"
+export {editDispatch} from "@/api/dispatch/editDispatch"
+export {deleteDispatch} from "@/api/dispatch/deleteDispatch"
+export {completeDispatch} from "@/api/dispatch/completeDispatch"
+export {confirmDispatch} from "@/api/dispatch/confirmDispatch"
+export {rejectDispatch} from "@/api/dispatch/rejectDispatch"

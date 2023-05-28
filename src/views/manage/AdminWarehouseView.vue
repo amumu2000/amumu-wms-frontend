@@ -6,8 +6,8 @@ import {reactive, ref} from "vue";
 const allWarehouseData = ref()
 const currentWarehouseData = ref(null)
 const targetWarehouseData = ref({})
-const newWarehouseData = reactive({})
-const filterForm = reactive({})
+const newWarehouseData = ref({})
+const filterForm = ref({})
 const multiSelectionID = ref([])
 
 
@@ -87,19 +87,20 @@ const handleMultiDelete = () => {
 }
 const addWarehouseConfirm = () => {
     dialogNewFormVisible.value = false
-    let form = {...newWarehouseData}
+    let form = {...newWarehouseData.value}
     addWarehouse(form).then(() => {
         initForm()
     })
 }
 
 const handleFilter = () => {
-    let form = {...filterForm}
+    let form = {...filterForm.value}
     if (form.manager_id) {
         form.manager_id = parseInt(form.manager_id)
     }
     init(form)
     drawerVisible.value = false
+    filterForm.value = {}
 }
 
 initForm()

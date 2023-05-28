@@ -1,7 +1,8 @@
 <script setup>
 import {ref,} from "vue";
-import {edit,self} from "@/api";
+import {edit, self} from "@/api";
 import {getRoleName} from "@/utils"
+
 const myselfUserData = ref({})
 const formLabelWidth = "180px"
 const init = () => {
@@ -26,6 +27,9 @@ init()
 <template>
     <div class="myselfWrap">
         <el-form :model="myselfUserData">
+            <el-form-item label="用户ID" :label-width="formLabelWidth">
+                <el-input v-model="myselfUserData.id" autocomplete="off" disabled/>
+            </el-form-item>
             <el-form-item label="用户名" :label-width="formLabelWidth">
                 <el-input v-model="myselfUserData.username" autocomplete="off"/>
             </el-form-item>

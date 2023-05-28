@@ -1,14 +1,15 @@
 <script setup>
 
 import {getUserList, addUser, deleteUser, editUser} from "@/api";
-import {reactive, ref} from "vue";
+import {ref} from "vue";
+import roleList from "@/utils/list/roleList";
 
 
 const allUserData = ref()
 const currentUserData = ref(null)
 const targetUserData = ref({})
-const newUserData = reactive({})
-const filterForm = reactive({})
+const newUserData = ref({})
+const filterForm = ref({})
 const multiSelectionID = ref([])
 
 
@@ -87,18 +88,28 @@ const handleMultiDelete = () => {
     })
 }
 const addUserConfirm = () => {
-    dialogNewFormVisible.value = false
-    addUser({...newUserData}).then(() => {
-        initForm()
-    })
+    let flag = true
+    let form = {...newUserData.value}
+    console.log(form)
+    if (form.password === undefined) flag = false
+    if (form.username === undefined) flag = false
+    if (form.role === undefined) flag = false
+    if (form.email === undefined) flag = false
+    if (flag) {
+        addUser(form).then(() => {
+            initForm()
+        })
+        dialogNewFormVisible.value = false
+    }
 }
 
 const handleFilter = () => {
-    let form = {...filterForm}
+    let form = {...filterForm.value}
     form.user_id = parseInt(form.user_id)
     currentUserData.value = null
     init(form)
     drawerVisible.value = false
+    filterForm.value = {}
 }
 
 initForm()
