@@ -1,6 +1,6 @@
 <script setup>
 
-import {getDispatchList, addDispatch, deleteDispatch, editDispatch, confirmDispatch} from "@/api";
+import {getDispatchList, addDispatch, deleteDispatch, editDispatch, confirmDispatch, self} from "@/api";
 import {ref} from "vue";
 import statusList from "@/utils/list/statusList";
 import typeList from "@/utils/list/typeList";
@@ -20,6 +20,12 @@ const dialogEditFormVisible = ref(false)
 const dialogNewFormVisible = ref(false)
 const drawerVisible = ref(false)
 const formLabelWidth = "180px"
+let role = null;
+self({}).then((res) => {
+    role = res["user"].role
+    console.log(role)
+})
+
 
 const updateCurrentDispatchData = () => {
     currentDispatchData.value = allDispatchData.value.filter((item, index) => {
@@ -27,6 +33,8 @@ const updateCurrentDispatchData = () => {
             index >= pageSize.value * (currentPage.value - 1)
     })
 }
+
+
 const init = (filter) => {
     getDispatchList(filter).then((data) => {
         const dispatches = data["dispatches"]
@@ -125,8 +133,8 @@ const addDispatchConfirm = () => {
 
 const handleFilter = () => {
     let form = {...filterForm.value}
-    if (form.Dispatch_id) {
-        form.Dispatch_id = parseInt(form.Dispatch_id)
+    if (form.dispatch_id) {
+        form.dispatch_id = parseInt(form.dispatch_id)
     }
     console.log(form)
     init(form)
@@ -142,17 +150,17 @@ initForm()
         <div>
             <el-table
                 :data="currentDispatchData"
-                stripe style="width: 900px"
+                stripe style="width: 1200px"
                 @selection-change="handleSelectionChange"
                 v-loading="currentDispatchData===null" class="table"
                 height="500">
                 <el-table-column type="selection" width="30"/>
-                <el-table-column prop="id" label="派遣ID" width="100px"/>
-                <el-table-column prop="src" label="原仓库" width="180px"/>
-                <el-table-column prop="dest" label="目标仓库" width="180px"/>
-                <el-table-column prop="status_name" align="center" label="派遣状态" width="100px"/>
-                <el-table-column prop="type_name" align="center" label="派遣类型" width="100px"/>
-                <el-table-column label="操作" align="center">
+                <el-table-column prop="id" align="center" label="派遣ID" width="100"/>
+                <el-table-column prop="src" label="原仓库"/>
+                <el-table-column prop="dest" label="目标仓库"/>
+                <el-table-column prop="status_name" align="center" label="派遣状态"/>
+                <el-table-column prop="type_name" align="center" label="派遣类型"/>
+                <el-table-column label="操作" align="center" v-if="role">
                     <template #default="scope">
                         <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                         <el-popconfirm
@@ -182,7 +190,7 @@ initForm()
             <div style="margin: 10px 0">
                 <el-button type="primary" @click="initForm">刷新</el-button>
                 <el-button type="primary" @click="drawerVisible = true">筛选</el-button>
-                <el-button type="primary" @click="dialogNewFormVisible = true">新增</el-button>
+                <el-button type="primary" @click="dialogNewFormVisible = true" v-if="role">新增</el-button>
                 <el-popconfirm
                     confirm-button-text="确认"
                     cancel-button-text="取消"
@@ -206,7 +214,7 @@ initForm()
         </div>
     </div>
     <!--    editDispatch dialog-->
-    <el-dialog v-model="dialogEditFormVisible" title="编辑派遣" width="1250px">
+    <el-dialog v-model="dialogEditFormVisible" title="编辑派遣" width="1250px" destroy-on-close>
         <el-form :model="targetDispatchData" :inline="true">
             <div class="form-sub-title">货物配置</div>
             <el-form-item label="源仓库ID" :label-width="formLabelWidth">
@@ -275,7 +283,7 @@ initForm()
         </template>
     </el-dialog>
     <!--    add dialog-->
-    <el-dialog v-model="dialogNewFormVisible" title="新增派遣" width="1250px">
+    <el-dialog v-model="dialogNewFormVisible" title="新增派遣" width="1250px" destroy-on-close>
         <el-form :model="newDispatchData" :inline="true">
             <div class="form-sub-title">货物配置</div>
             <el-form-item label="源仓库ID" :label-width="formLabelWidth">
@@ -353,14 +361,20 @@ initForm()
         <div>
             <el-form :model="filterForm">
                 <el-form-item label="派遣ID" :label-width="formLabelWidth">
-                    <el-input v-model="filterForm.Dispatch_id" autocomplete="off"/>
+                    <el-input type="number" v-model="filterForm.dispatch_id" autocomplete="off"/>
                 </el-form-item>
-                <el-form-item label="仓库名" :label-width="formLabelWidth">
-                    <el-input v-model="filterForm.Dispatch_name" autocomplete="off"/>
+                <el-form-item label="管理员ID" :label-width="formLabelWidth">
+                    <el-input type="number" v-model="filterForm.manager_id" autocomplete="off"/>
                 </el-form-item>
-
-                <el-form-item label="类别" :label-width="formLabelWidth">
-                    <el-input v-model="filterForm.category" autocomplete="off"/>
+                <el-form-item label="派遣状态" :label-width="formLabelWidth">
+                    <el-select v-model="filterForm.status">
+                        <el-option
+                            v-for="item in statusList"
+                            :key="item.status_id"
+                            :label="item.status_name"
+                            :value="item.status_id"
+                        />
+                    </el-select>
                 </el-form-item>
                 <div style="display: flex;justify-content: right">
                     <el-button type="primary" @click="handleFilter">筛选</el-button>

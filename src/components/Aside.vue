@@ -7,6 +7,7 @@ import {self} from "@/api"
 import {checkShowMenuItem, checkShowMenu} from '@/utils'
 
 const route = useRoute()
+
 const activeIndex = ref(route.fullPath)
 const role = ref()
 const routeList = [
@@ -80,7 +81,9 @@ onMounted(() => {
         role.value = res.user.role
     })
 })
-
+const goAim = () => {
+    location.href = '/manage/console/aim'
+}
 
 </script>
 
@@ -92,7 +95,7 @@ onMounted(() => {
                      :collapse="isCollapse"
                      :default-active="activeIndex">
                 <div class="logo" style="max-height: 64px;display: flex">
-                    <img src="@/assets/logo.svg" alt="logo" style="max-height: 64px;">
+                    <img src="@/assets/logo.svg" alt="logo" class="logo-img" @click="goAim">
                     <div v-if="!isCollapse" class="flex-grow-fill asideTitle">Amm WMS</div>
                 </div>
                 <template v-for="item in routeList">
@@ -132,5 +135,10 @@ onMounted(() => {
         word-wrap: normal;
         word-break: keep-all;
     }
+}
+
+.logo-img {
+    max-height: 64px;
+    cursor: pointer;
 }
 </style>

@@ -2,8 +2,15 @@
 import {ref,} from "vue";
 import {edit, self} from "@/api";
 import {getRoleName} from "@/utils"
+import {useCookies} from "vue3-cookies";
+import {useRouter} from "vue-router";
+import {ElMessage} from "element-plus";
+import md5 from "crypto-js/md5";
 
+const router = useRouter()
+const {cookies} = useCookies()
 const myselfUserData = ref({})
+const loading = ref(false)
 const formLabelWidth = "180px"
 const init = () => {
     self({}).then((data) => {
@@ -15,18 +22,43 @@ const init = () => {
     })
 }
 
+const logout = () => {
+    cookies.remove("token")
+    router.push("/login")
+}
+
 
 const handleEdit = () => {
-    let data = {...myselfUserData.value}
-    console.log(data)
-    edit(data)
+    let flag = false
+    if (myselfUserData.value["password"]) flag = true
+    let data = {
+        username: myselfUserData.value["username"],
+        password: myselfUserData.value["password"] ? md5(myselfUserData.value["password"]).toString() : undefined
+    }
+    loading.value = true
+    edit(data).then(() => {
+        if (flag) {
+            ElMessage.success({
+                message: "修改成功，请重新登录"
+            })
+            logout()
+        } else {
+            ElMessage.success({
+                message: "修改成功"
+            })
+            setTimeout(() => {
+                loading.value = false
+            }, 200)
+
+        }
+    })
 }
 init()
 </script>
 
 <template>
     <div class="myselfWrap">
-        <el-form :model="myselfUserData">
+        <el-form :model="myselfUserData" v-loading="loading">
             <el-form-item label="用户ID" :label-width="formLabelWidth">
                 <el-input v-model="myselfUserData.id" autocomplete="off" disabled/>
             </el-form-item>

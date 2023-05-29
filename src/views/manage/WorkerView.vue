@@ -70,6 +70,7 @@ const rejectConfirm = () => {
     let form = {...rejectDispatchData.value}
     rejectDispatch(form).then(() => {
         dialogRejectFormVisible.value = false
+        rejectDispatchData.value = {}
     })
 }
 
@@ -95,10 +96,9 @@ const handleMultiComplete = () => {
 
 const handleFilter = () => {
     let form = {...filterForm.value}
-    if (form.Dispatch_id) {
-        form.Dispatch_id = parseInt(form.Dispatch_id)
+    if (form.dispatch_id) {
+        form.dispatch_id = parseInt(form.dispatch_id)
     }
-    console.log(form)
     init(form)
     drawerVisible.value = false
     filterForm.value = {}
@@ -162,7 +162,7 @@ initForm()
             />
         </div>
     </div>
-    <el-dialog v-model="dialogDetailFormVisible" title="派遣详情" width="1250px">
+    <el-dialog v-model="dialogDetailFormVisible" title="派遣详情" width="1250px" destroy-on-close>
         <el-form :model="targetDispatchData" :inline="true" :disabled="true">
             <div class="form-sub-title">货物配置</div>
             <el-form-item label="源仓库ID" :label-width="formLabelWidth">
@@ -217,11 +217,15 @@ initForm()
                 </el-select>
             </el-form-item>
             <el-col>
-                <el-form-item label="备注" :label-width="formLabelWidth">
+                <el-form-item label="派遣备注" :label-width="formLabelWidth">
                     <el-input v-model="targetDispatchData.comment" autocomplete="off" type="textarea"/>
                 </el-form-item>
             </el-col>
-
+            <el-col>
+                <el-form-item label="无法完成备注" :label-width="formLabelWidth">
+                    <el-input v-model="targetDispatchData.reject_comment" autocomplete="off" type="textarea"/>
+                </el-form-item>
+            </el-col>
         </el-form>
         <template #footer>
           <span class="dialog-footer">
@@ -229,7 +233,7 @@ initForm()
           </span>
         </template>
     </el-dialog>
-    <el-dialog v-model="dialogRejectFormVisible" title="详情" width="650px">
+    <el-dialog v-model="dialogRejectFormVisible" title="详情" width="650px" destroy-on-close>
         <el-form :model="rejectDispatchData">
             <el-form-item label="备注" :label-width="formLabelWidth">
                 <el-input v-model="rejectDispatchData.reject_comment" autocomplete="off" type="textarea"/>

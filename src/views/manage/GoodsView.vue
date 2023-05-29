@@ -17,6 +17,7 @@ const total = ref(0)
 const dialogEditFormVisible = ref(false)
 const dialogNewFormVisible = ref(false)
 const drawerVisible = ref(false)
+const drawer2Visible = ref(false)
 const formLabelWidth = "180px"
 
 const updateCurrentGoodsData = () => {
@@ -58,7 +59,6 @@ const handleSizeChange = (e) => {
 
 const handleEdit = (index, row) => {
     targetGoodsData.value = {...row}
-    targetGoodsData.value.password = ""
     dialogEditFormVisible.value = true
 }
 
@@ -113,6 +113,12 @@ const handleFilter = () => {
     filterForm.value = {}
 }
 
+const handleVDetail = (index, row) => {
+    targetGoodsData.value = {...row}
+    console.log(targetGoodsData.value.inventory)
+    drawer2Visible.value = true
+}
+
 initForm()
 </script>
 
@@ -128,12 +134,13 @@ initForm()
                 <el-table-column type="selection" width="30"/>
                 <el-table-column prop="id" label="货物ID" width="100px"/>
                 <el-table-column prop="good_name" label="货物名"/>
-                <el-table-column prop="category" label="类别"/>
-                <el-table-column prop="price" label="价格"/>
-                <el-table-column prop="total_count" label="总库存"/>
+                <el-table-column prop="category" label="类别" width="100px"/>
+                <el-table-column prop="price" label="价格" width="100px"/>
+                <el-table-column prop="total_count" label="总库存" width="100px"/>
                 <el-table-column label="操作" align="center">
                     <template #default="scope">
                         <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button size="small" @click="handleVDetail(scope.$index, scope.row)">库存明细</el-button>
                         <el-popconfirm
                             confirm-button-text="确认"
                             cancel-button-text="取消"
@@ -178,7 +185,7 @@ initForm()
         </div>
     </div>
     <!--    editGoods dialog-->
-    <el-dialog v-model="dialogEditFormVisible" title="编辑货物" width="650px">
+    <el-dialog v-model="dialogEditFormVisible" title="编辑货物" width="650px" destroy-on-close>
         <el-form :model="targetGoodsData">
             <el-form-item label="货物ID" :label-width="formLabelWidth">
                 <el-input v-model="targetGoodsData.id" autocomplete="off" disabled/>
@@ -206,7 +213,7 @@ initForm()
     <!--    add dialog-->
 
 
-    <el-dialog v-model="dialogNewFormVisible" title="新增货物" width="650px">
+    <el-dialog v-model="dialogNewFormVisible" title="新增货物" width="650px" destroy-on-close>
         <el-form :model="newGoodsData">
             <el-form-item label="货物名" :label-width="formLabelWidth">
                 <el-input v-model="newGoodsData.good_name" autocomplete="off"/>
@@ -233,7 +240,7 @@ initForm()
     <!--    drawer-->
     <el-drawer
         v-model="drawerVisible"
-        title="仓库筛选"
+        title="货物筛选"
     >
         <div>
             <el-form :model="filterForm">
@@ -254,9 +261,16 @@ initForm()
                     <el-button type="primary" @click="handleFilter">筛选</el-button>
                     <el-button @click="drawerVisible = false">取消</el-button>
                 </div>
-
             </el-form>
+        </div>
+    </el-drawer>
 
+    <el-drawer v-model="drawer2Visible" title="库存明细">
+        <div>
+            <el-table :data="targetGoodsData.inventory" style="margin: 0 auto;width: 240px">
+                <el-table-column prop="warehouse_id" align="center" label="仓库ID" width="120px"/>
+                <el-table-column prop="count" align="center" label="库存量" width="120px"/>
+            </el-table>
         </div>
     </el-drawer>
 </template>

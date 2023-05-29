@@ -167,7 +167,7 @@ initForm()
         </div>
     </div>
     <!--    editGoods dialog-->
-    <el-dialog v-model="dialogEditFormVisible" title="编辑仓库" width="650px">
+    <el-dialog v-model="dialogEditFormVisible" title="编辑仓库" width="650px" destroy-on-close>
         <el-form :model="targetWarehouseData">
             <el-form-item label="仓库ID" :label-width="formLabelWidth">
                 <el-input v-model="targetWarehouseData.id" autocomplete="off" disabled/>
@@ -195,7 +195,7 @@ initForm()
     <!--    add dialog-->
 
 
-    <el-dialog v-model="dialogNewFormVisible" title="新增仓库" width="650px">
+    <el-dialog v-model="dialogNewFormVisible" title="新增仓库" width="650px" destroy-on-close>
         <el-form :model="newWarehouseData">
             <el-form-item label="仓库名" :label-width="formLabelWidth">
                 <el-input v-model="newWarehouseData.warehouse_name" autocomplete="off"/>
@@ -264,7 +264,8 @@ initForm()
 .el-pagination {
     justify-content: center;
 }
-.el-textarea{
+
+.el-textarea {
     width: 350px;
 }
 </style>

@@ -6,6 +6,7 @@ export {getUserList} from '@/api/admin/getUserList'
 export {addUser} from "@/api/admin/addUser"
 export {deleteUser} from "@/api/admin/deleteUser"
 export {editUser} from "@/api/admin/editUser"
+export {getLogsList} from "@/api/admin/getLogsList"
 
 export {getWarehouseList} from "@/api/warehouse/getWarehouseList"
 export {addWarehouse} from "@/api/warehouse/addWarehouse"

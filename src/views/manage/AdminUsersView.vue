@@ -176,7 +176,7 @@ initForm()
         </div>
     </div>
     <!--    editGoods dialog-->
-    <el-dialog v-model="dialogEditFormVisible" title="编辑用户" width="650px">
+    <el-dialog v-model="dialogEditFormVisible" title="编辑用户" width="650px" destroy-on-close>
         <el-form :model="targetUserData">
             <el-form-item label="用户ID" :label-width="formLabelWidth">
                 <el-input v-model="targetUserData.id" autocomplete="off" disabled/>
@@ -211,7 +211,7 @@ initForm()
     <!--    add dialog-->
 
 
-    <el-dialog v-model="dialogNewFormVisible" title="新增用户" width="650px">
+    <el-dialog v-model="dialogNewFormVisible" title="新增用户" width="650px" destroy-on-close>
         <el-form :model="newUserData">
             <el-form-item label="用户名" :label-width="formLabelWidth">
                 <el-input v-model="newUserData.username" autocomplete="off"/>
@@ -250,7 +250,7 @@ initForm()
         <div>
             <el-form :model="filterForm">
                 <el-form-item label="用户ID" :label-width="formLabelWidth">
-                    <el-input v-model="filterForm.user_id" autocomplete="off"/>
+                    <el-input type="number" v-model="filterForm.user_id" autocomplete="off"/>
                 </el-form-item>
                 <el-form-item label="用户名" :label-width="formLabelWidth">
                     <el-input v-model="filterForm.username" autocomplete="off"/>
