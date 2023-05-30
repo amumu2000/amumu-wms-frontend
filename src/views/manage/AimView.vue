@@ -61,7 +61,7 @@ const init = () => {
         let len = arr.length
         for (let i = 0; i < len; i++) {
             if (map.get(arr[i].category) === undefined) map.set(arr[i].category, 0)
-            map.set(arr[i].category, map.get(arr[i].category) + arr[i].total_count)
+            map.set(arr[i].category, map.get(arr[i].category) + arr[i]["total_count"])
         }
         map.forEach((value, key) => {
             option.value.legend.data.push(key)
@@ -76,7 +76,7 @@ init()
 </script>
 
 <template>
-    <div style="width: 600px;height: 600px">
+    <div style="width: 600px;height: 600px;margin: 30px auto 0">
         <v-chart class="chart" :option="option" autoresize/>
     </div>
 

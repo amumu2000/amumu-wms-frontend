@@ -23,7 +23,6 @@ export default [
         role_id: 2,
         role_list_item: [
             "/manage/console/myself",
-            "/manage/console/aim",
             "/manage/console/worker",
         ],
         role_list_menu: ["主控舱段", "我的工作"],
