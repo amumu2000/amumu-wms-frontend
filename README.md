@@ -1,37 +1,15 @@
-# amumu-wms-frontend
+# 智能物资仓储管理系统
 
-This template should help get you started developing with Vue 3 in Vite.
+## 技术栈 - Vue3
+1. Vue Router
+2. Element-Plus
+3. axios
+4. vue3-cookies
+5. less
+6. crypto-js
+7. vue-echarts
+8. vue3-puzzle-vcode
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Environment
-1. node v18.16.0
-2. pnpm 8.5.1
-3. vite/4.3.5 win32-x64 node-v18.16.0
-4. go version go1.20.4 windows/amd64
-5. mysql 8.0
-
-
-## Project Setup
-
-```sh
-pnpm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
-```
-
-### Compile and Minify for Production
-
-```sh
-pnpm build
-```
+## 开发工具
+1. WebStorm
+2. Edge
